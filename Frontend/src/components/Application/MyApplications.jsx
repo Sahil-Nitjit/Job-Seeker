@@ -18,7 +18,7 @@ const MyApplications = () => {
     try {
       if (user && user.role === "Employer") {
         axios
-          .get("http://localhost:4000/api/v1/application/employer/getall", {
+          .get("http://localhost:3000/api/v1/application/employer/getall", {
             withCredentials: true,
           })
           .then((res) => {
@@ -26,7 +26,7 @@ const MyApplications = () => {
           });
       } else {
         axios
-          .get("http://localhost:4000/api/v1/application/jobseeker/getall", {
+          .get("http://localhost:3000/api/v1/application/jobseeker/getall", {
             withCredentials: true,
           })
           .then((res) => {
@@ -45,7 +45,7 @@ const MyApplications = () => {
   const deleteApplication = (id) => {
     try {
       axios
-        .delete(`http://localhost:4000/api/v1/application/delete/${id}`, {
+        .delete(`http://localhost:3000/api/v1/application/delete/${id}`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -122,71 +122,69 @@ export default MyApplications;
 
 const JobSeekerCard = ({ element, deleteApplication, openModal }) => {
   return (
-    <>
-      <div className="job_seeker_card">
-        <div className="detail">
-          <p>
-            <span>Name:</span> {element.name}
-          </p>
-          <p>
-            <span>Email:</span> {element.email}
-          </p>
-          <p>
-            <span>Phone:</span> {element.phone}
-          </p>
-          <p>
-            <span>Address:</span> {element.address}
-          </p>
-          <p>
-            <span>CoverLetter:</span> {element.coverLetter}
-          </p>
-        </div>
-        <div className="resume">
+    <div className="job_seeker_card">
+      <div className="detail">
+        <p><span>Name:</span> {element.name}</p>
+        <p><span>Email:</span> {element.email}</p>
+        <p><span>Phone:</span> {element.phone}</p>
+        <p><span>Address:</span> {element.address}</p>
+        <p><span>CoverLetter:</span> {element.coverLetter}</p>
+      </div>
+
+      <div className="resume">
+        {element.resume.url.endsWith(".png") ||
+        element.resume.url.endsWith(".jpg") ||
+        element.resume.url.endsWith(".jpeg") ||
+        element.resume.url.endsWith(".webp") ? (
           <img
             src={element.resume.url}
             alt="resume"
             onClick={() => openModal(element.resume.url)}
           />
-        </div>
-        <div className="btn_area">
-          <button onClick={() => deleteApplication(element._id)}>
-            Delete Application
+        ) : (
+          <button onClick={() => window.open(element.resume.url, "_blank")}>
+            View Resume
           </button>
-        </div>
+        )}
       </div>
-    </>
+
+      <div className="btn_area">
+        <button onClick={() => deleteApplication(element._id)}>
+          Delete Application
+        </button>
+      </div>
+    </div>
   );
 };
 
+
 const EmployerCard = ({ element, openModal }) => {
   return (
-    <>
-      <div className="job_seeker_card">
-        <div className="detail">
-          <p>
-            <span>Name:</span> {element.name}
-          </p>
-          <p>
-            <span>Email:</span> {element.email}
-          </p>
-          <p>
-            <span>Phone:</span> {element.phone}
-          </p>
-          <p>
-            <span>Address:</span> {element.address}
-          </p>
-          <p>
-            <span>CoverLetter:</span> {element.coverLetter}
-          </p>
-        </div>
-        <div className="resume">
+    <div className="job_seeker_card">
+      <div className="detail">
+        <p><span>Name:</span> {element.name}</p>
+        <p><span>Email:</span> {element.email}</p>
+        <p><span>Phone:</span> {element.phone}</p>
+        <p><span>Address:</span> {element.address}</p>
+        <p><span>CoverLetter:</span> {element.coverLetter}</p>
+      </div>
+
+      <div className="resume">
+        {element.resume.url.endsWith(".png") ||
+        element.resume.url.endsWith(".jpg") ||
+        element.resume.url.endsWith(".jpeg") ||
+        element.resume.url.endsWith(".webp") ? (
           <img
             src={element.resume.url}
             alt="resume"
             onClick={() => openModal(element.resume.url)}
           />
-        </div>
+        ) : (
+          <button onClick={() => window.open(element.resume.url, "_blank")}>
+            View Resume
+          </button>
+        )}
       </div>
-    </>
+    </div>
   );
 };

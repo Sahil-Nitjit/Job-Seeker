@@ -10,12 +10,13 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 
 const app = express();
-config({ path: "./config/config.env" });
-
+// config({ path: "./config.env" });
+config();
+const FRONTEND_URL=process.env.FRONTEND_URL || 'http://localhost:5173';
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL],
-    method: ["GET", "POST", "DELETE", "PUT"],
+    origin: [FRONTEND_URL],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
